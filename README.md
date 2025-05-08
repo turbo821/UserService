@@ -12,7 +12,7 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connection)); // It is database in postgresql 
 ```
 
-И далее создать бд, настроить в appsettings.json подключение и провести миграцию:
+И далее создать бд usersdb, настроить в appsettings.json подключение и провести миграцию:
 `dotnet ef database update`
 
 2. Данные админа (прописаны в appsettings.json):
