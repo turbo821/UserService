@@ -4,7 +4,7 @@
 
 1. Изначально используется in memory базы данных
 
-Для использования postgres в Program.cs нужно раскомментировать и закомментировать, чтобы было так на:
+Для использования postgres в Program.cs нужно раскомментировать и закомментировать, чтобы было так:
 ```C#
 // builder.Services.AddDbContext<ApplicationContext>(options => options.UseInMemoryDatabase("usersdb")); // It is database in memory
 // OR
