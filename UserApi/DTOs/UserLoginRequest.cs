@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UserService.Models
+namespace UserApi.DTOs
 {
-    public class AdminCredentials
+    public class UserLoginRequest
     {
         [Required]
         [StringLength(50)]
@@ -10,12 +10,8 @@ namespace UserService.Models
         public required string Login { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z0-9]+$")]
         [StringLength(100)]
         public required string Password { get; set; }
-
-        [Required]
-        [StringLength(100)]
-        [RegularExpression(@"^[a-zA-Zа-яА-ЯёЁ]+$")]
-        public required string Name { get; set; }
     }
 }

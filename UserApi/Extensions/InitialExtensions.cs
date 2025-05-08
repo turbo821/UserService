@@ -1,6 +1,6 @@
-﻿using UserService.Services;
+﻿using UserApi.Services;
 
-namespace UserService.Extensions
+namespace UserApi.Extensions
 {
     public static class InitialExtensions
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using UserService.Data;
-using UserService.Models;
+using UserApi.Data;
+using UserApi.Models;
 
-namespace UserService.Services
+namespace UserApi.Services
 {
     public class AdminInitializer
     {
@@ -26,7 +26,7 @@ namespace UserService.Services
                 return;
             }
 
-            var admin = User.CreateUser(_options.Login, _options.Password, _options.Name);
+            var admin = User.CreateUser(_options.Login, _options.Password, _options.Name, admin: true);
 
             await _context.Users.AddAsync(admin);
             await _context.SaveChangesAsync();
