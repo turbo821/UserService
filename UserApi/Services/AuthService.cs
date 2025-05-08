@@ -15,11 +15,12 @@ namespace UserApi.Services
             _repo = repo;
             _jwtProvider = jwtProvider;
         }
-        public async Task<UserLoginResponse> Login(UserLoginRequest request)
+        public async Task<UserLoginResponse> Login(SignInRequest request)
         {
             var user = await _repo.GetByLogin(request.Login);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            if (user == null || user.RevokedBy != null 
+                || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
                 return new UserLoginResponse { Success = false, Message = "Invalid credentials" };
 
             var accessToken = _jwtProvider.GenerateAccessToken(user, user.Admin);

@@ -18,7 +18,7 @@ namespace UserApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginRequest request)
+        public async Task<IActionResult> Login(SignInRequest request)
         {
             var response = await _authService.Login(request);
             if (!response.Success) return Unauthorized(response.Message);

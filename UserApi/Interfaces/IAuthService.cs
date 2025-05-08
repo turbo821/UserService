@@ -4,6 +4,6 @@ namespace UserApi.Interfaces
 {
     public interface IAuthService
     {
-        Task<UserLoginResponse> Login(UserLoginRequest request);
+        Task<UserLoginResponse> Login(SignInRequest request);
     }
 }

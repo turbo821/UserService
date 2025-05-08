@@ -14,6 +14,35 @@ namespace UserApi.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            var users = await _context.Users
+                .Where(u => u.RevokedOn == null)
+                .OrderBy(u => u.CreatedOn)
+                .ToListAsync();
+
+            return users;
+        }
+
+        public async Task<IEnumerable<User>> GetAllByOverAge(int age)
+        {
+            var currentDate = DateTime.UtcNow;
+            var targetDate = currentDate.AddYears(-age);
+
+            var users = await _context.Users
+                .Where(u => u.RevokedOn == null &&
+                           u.Birthday != null &&
+                           u.Birthday.Value.Year <= targetDate.Year &&
+                           (u.Birthday.Value.Year < targetDate.Year ||
+                            (u.Birthday.Value.Month < targetDate.Month ||
+                             (u.Birthday.Value.Month == targetDate.Month &&
+                              u.Birthday.Value.Day <= targetDate.Day))))
+                .OrderBy(u => u.CreatedOn)
+                .ToListAsync();
+
+            return users;
+        }
+
         public async Task<User?> GetById(Guid id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
@@ -34,9 +63,21 @@ namespace UserApi.Repositories
             return null;
         }
 
-        public async Task<bool> IsActive(Guid id)
+        public async Task<bool> Update(User user)
         {
-            return await _context.Users.AnyAsync(u => u.Id == id && u.RevokedOn == null);
+            _context.Users.Update(user);
+            return await Save();
+        }
+
+        public async Task<bool> Delete(User user)
+        {
+            _context.Users.Remove(user);
+            return await Save();
+        }
+
+        public async Task<bool> isActive(Guid userId)
+        {
+            return await _context.Users.AnyAsync(u => u.Id == userId && u.RevokedOn == null);
         }
 
         private async Task<bool> Save()

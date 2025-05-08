@@ -11,6 +11,7 @@ namespace UserApi.DTOs
 
         [Required]
         [StringLength(100)]
+        [RegularExpression(@"^[a-zA-Z0-9]+$")]
         public required string Password { get; set; }
 
         [Required]

@@ -8,11 +8,10 @@ using UserApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddDbContext<ApplicationContext>(options => options.UseInMemoryDatabase("usersdb")); // Or database in memory
-
+ builder.Services.AddDbContext<ApplicationContext>(options => options.UseInMemoryDatabase("usersdb")); // It is database in memory
+// OR
 string connection = builder.Configuration.GetConnectionString("DefaultConnection")!;
-builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connection)); // Or database in postgresql 
-
+// builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connection)); // It is database in postgresql 
 
 builder.Services.Configure<AdminCredentials>(builder.Configuration.GetSection(nameof(AdminCredentials)));
 builder.Services.AddScoped<AdminInitializer>();
